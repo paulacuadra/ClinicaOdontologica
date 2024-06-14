@@ -12,8 +12,9 @@ public interface IPacienteRepository extends JpaRepository<Paciente, Integer> {
 
     //Buscar Paciente por DNI
 
-
     @Query("SELECT p FROM Paciente p WHERE p.dni = :dni")
-    Optional<Paciente> findByDni(@Param("dni") String dni);
+    List<Paciente> findByDni(@Param("dni") String dni);
 
+    @Query("SELECT p FROM Paciente p WHERE LOWER(p.domicilio.provincia) LIKE LOWER(CONCAT('%', :provincia, '%'))")
+    List<Paciente> findbyProvinciaLike(@Param("provincia") String provincia);
 }

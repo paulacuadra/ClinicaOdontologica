@@ -1,6 +1,8 @@
 package dh.backend.clinicamvc.service.impl;
 
+import dh.backend.clinicamvc.Dto.response.PacienteResponseDto;
 import dh.backend.clinicamvc.entity.Paciente;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.repository.IPacienteRepository;
 import dh.backend.clinicamvc.service.IPacienteService;
 import org.slf4j.Logger;
@@ -24,6 +26,11 @@ public class PacienteService implements IPacienteService {
         logger.info("Paciente registrado: "+ paciente);
         return pacienteRepository.save(paciente);
     }
+    //registrar paciente dto
+    public PacienteResponseDto registrar(Paciente paciente) {
+        Paciente savedPaciente = pacienteRepository.save(paciente);
+        return new PacienteResponseDto(savedPaciente.getId(), savedPaciente.getNombre(), savedPaciente.getApellido(), savedPaciente.getDni());
+    }
 
     public Optional<Paciente> buscarPorId(Integer id){
         return pacienteRepository.findById(id);
@@ -39,9 +46,14 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public void eliminarPaciente(Integer id) {
-        pacienteRepository.deleteById(id);
+    public void eliminarPaciente(Integer id) throws ResourceNotFoundException {
+        Optional<Paciente> pacienteOptional = buscarPorId(id);
+        if(pacienteOptional.isPresent())
+            pacienteRepository.deleteById(id);
+        else
+            throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");
     }
 
-    public Optional<Paciente> buscarPorDni(String dni) {return pacienteRepository.findByDni(dni);}
+    public List<Paciente> buscarPorDni(String dni) {return pacienteRepository.findByDni(dni);}
+    public List<Paciente> buscarPorProvincia(String provincia){return pacienteRepository.findbyProvinciaLike(provincia);};
 }

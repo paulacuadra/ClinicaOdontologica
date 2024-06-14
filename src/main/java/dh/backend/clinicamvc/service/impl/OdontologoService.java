@@ -1,7 +1,9 @@
 package dh.backend.clinicamvc.service.impl;
 
 
+import dh.backend.clinicamvc.Dto.response.OdontologoResponseDto;
 import dh.backend.clinicamvc.entity.Odontologo;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.repository.IOdontologoRepository;
 import dh.backend.clinicamvc.service.IOdontologoService;
 import org.slf4j.Logger;
@@ -25,6 +27,11 @@ public class OdontologoService implements IOdontologoService {
         return odontologoRepository.save(odontologo);
     }
 
+    //registrar odontologoDto
+    public OdontologoResponseDto registrar(Odontologo odontologo) {
+        Odontologo savedOdontologo = odontologoRepository.save(odontologo);
+        return new OdontologoResponseDto(savedOdontologo.getId(), savedOdontologo.getNombre(), savedOdontologo.getApellido(), savedOdontologo.getNroMatricula());
+    }
     public Optional<Odontologo> buscarUnOdontologo(Integer id){
         return odontologoRepository.findById(id);
     }
@@ -38,7 +45,19 @@ public class OdontologoService implements IOdontologoService {
     }
 
     @Override
-    public void eliminarOdontologo(Integer id) {
-        odontologoRepository.deleteById(id);
+    public void eliminarOdontologo(Integer id) throws ResourceNotFoundException {
+        Optional<Odontologo> odontologoOptional = buscarUnOdontologo(id);
+        if(odontologoOptional.isPresent())
+            odontologoRepository.deleteById(id);
+        else throw new ResourceNotFoundException("{\"message\": \"odontologo no encontrado\"}");
+    }
+    @Override
+    public List<Odontologo> buscarPorApellido(String apellido) {
+        return odontologoRepository.buscarPorApellido(apellido);
+    }
+
+    @Override
+    public List<Odontologo> buscarPorNombre(String nombre) {
+        return odontologoRepository.findByNombreLike(nombre);
     }
 }

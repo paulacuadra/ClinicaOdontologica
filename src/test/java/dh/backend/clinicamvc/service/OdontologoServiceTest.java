@@ -31,22 +31,30 @@ public class OdontologoServiceTest {
         odontologo.setApellido("Perez");
         odontologo.setNroMatricula("123456");
     }
+
     @Test
     @DisplayName("Testear que un odontologo fue guardado")
     void testOdontologoGuardado(){
         Odontologo odontologoDesdeLaBD = odontologoService.agregarOdontologo(odontologo);
-
+        LOGGER.info("odontologo: "+ odontologo);
         assertNotNull(odontologoDesdeLaBD);
+        assertNotNull(odontologoDesdeLaBD.getId());
     }
     @Test
     @DisplayName("Testear busqueda odontologo por id")
     void testOdontologoPorId(){
-        Integer id = 1;
+
+        Odontologo odontologoGuardado = odontologoService.agregarOdontologo(odontologo);
+        Integer id = odontologoGuardado.getId();
+
         Optional<Odontologo> odontologoEncontrado = odontologoService.buscarUnOdontologo(id);
         Odontologo odontologo1 = odontologoEncontrado.get();
 
         assertEquals(id, odontologo1.getId());
+        assertNotNull(odontologoGuardado.getId());
+
     }
+
     @Test
     @DisplayName("Testear busqueda todos los odontologos")
     void testBusquedaTodos() {

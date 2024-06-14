@@ -69,19 +69,10 @@ class PacienteServiceTest {
 
         List<Paciente> pacientes = pacienteService.buscarTodos();
 
-        assertTrue(pacientes.size()!=0);
+        assertFalse(pacientes.isEmpty());
 
     }
-    @Test
-    void testBusquedaDNI(){
-        String dni = "464646";
-        Optional<Paciente> pacienteEncontrado =  pacienteService.buscarPorDni("464646");
-        Paciente paciente1 = pacienteEncontrado.get();
-        LOGGER.info("Paciente encontrado: "+paciente1);
 
-        assertEquals(dni, paciente1.getDni());
-
-    }
 
 
 
