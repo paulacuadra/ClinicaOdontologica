@@ -13,6 +13,7 @@ import dh.backend.clinicamvc.repository.IOdontologoRepository;
 import dh.backend.clinicamvc.repository.IPacienteRepository;
 import dh.backend.clinicamvc.repository.ITurnoRepository;
 import dh.backend.clinicamvc.service.ITurnoService;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,9 @@ public class TurnoService implements ITurnoService {
         if(turnoOptional.isPresent()){
             Turno turnoEncontrado = turnoOptional.get();
             TurnoResponseDto turnoADevolver = mapToResponseDto(turnoEncontrado);
+            logger.info("Turno encontrado: "+ turnoADevolver);
             return turnoADevolver;
+
         }
         return null;
     }
@@ -82,6 +85,7 @@ public class TurnoService implements ITurnoService {
             turnoAuxiliar = mapToResponseDto(turno);
             turnosADevolver.add(turnoAuxiliar);
         }
+        logger.info("Turnos encontrados: "+ turnosADevolver.size());
         return turnosADevolver;
     }
 
@@ -98,7 +102,7 @@ public class TurnoService implements ITurnoService {
             turnoAModificar.setFecha(LocalDate.parse(turnoRequestDto.getFecha()));
             turnoRepository.save(turnoAModificar);
         }
-
+        logger.info("Turno actualizado");
     }
 
     @Override
@@ -108,8 +112,23 @@ public class TurnoService implements ITurnoService {
             turnoRepository.deleteById(id);
         else
             throw new ResourceNotFoundException("{\"message\": \"turno no encontrado\"}");
-
+        logger.info("Turno eliminado");
     }
+
+    @Override
+    public List<TurnoResponseDto> buscarTurnoEntreFechas(LocalDate startDate, LocalDate endDate) {
+        List<Turno> listadoTurnos = turnoRepository.buscarTurnoEntreFechas(startDate, endDate);
+        List<TurnoResponseDto> listadoARetornar = new ArrayList<>();
+        TurnoResponseDto turnoAuxiliar = null;
+        for (Turno turno: listadoTurnos){
+            turnoAuxiliar = mapToResponseDto(turno);
+            listadoARetornar.add(turnoAuxiliar);
+        }
+        logger.info("Turnos encontrados: "+ listadoARetornar.size());
+
+        return listadoARetornar;
+    }
+
     @Override
     public List<Turno> buscarPorOdontologo(Integer id){return turnoRepository.findByOdontologoId(id);}
 

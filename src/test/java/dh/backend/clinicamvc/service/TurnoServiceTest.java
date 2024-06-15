@@ -75,9 +75,7 @@ public class TurnoServiceTest {
     public void testCrearTurno() throws Exception {
         turnoService.registrar(turno);
 
-
         List<TurnoResponseDto> buscarTurno = turnoService.buscarTodos();
-
 
         assertFalse(buscarTurno.isEmpty());
     }

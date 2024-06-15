@@ -6,6 +6,7 @@ import dh.backend.clinicamvc.entity.Turno;
 import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ITurnoService {
@@ -16,5 +17,8 @@ public interface ITurnoService {
     List<TurnoResponseDto> buscarTodos();
     void actualizarTurno(Integer id, TurnoRequestDto turnoRequestDto);
     void eliminarTurno(Integer id) throws ResourceNotFoundException;
+
+    // HQL
+    List<TurnoResponseDto> buscarTurnoEntreFechas(LocalDate startDate, LocalDate endDate);
     List<Turno> buscarPorOdontologo(Integer id);
 }

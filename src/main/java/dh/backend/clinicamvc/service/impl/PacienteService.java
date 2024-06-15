@@ -48,10 +48,13 @@ public class PacienteService implements IPacienteService {
     @Override
     public void eliminarPaciente(Integer id) throws ResourceNotFoundException {
         Optional<Paciente> pacienteOptional = buscarPorId(id);
-        if(pacienteOptional.isPresent())
+        if(pacienteOptional.isPresent()) {
             pacienteRepository.deleteById(id);
-        else
+            logger.info("Paciente registrado: " + pacienteOptional);
+        }
+        else {
             throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");
+        }
     }
 
     public List<Paciente> buscarPorDni(String dni) {return pacienteRepository.findByDni(dni);}
