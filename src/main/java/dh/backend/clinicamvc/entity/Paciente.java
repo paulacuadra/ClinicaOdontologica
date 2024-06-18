@@ -23,6 +23,7 @@ public class Paciente {
     private String nombre;
     private String dni;
     private LocalDate fechaIngreso;
+    private LocalDate fechaAlta;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domicilio_id")

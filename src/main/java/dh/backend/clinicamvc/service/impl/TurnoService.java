@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,7 @@ public class TurnoService implements ITurnoService {
             turnoARegistrar.setOdontologo(odontologo.get());
             turnoARegistrar.setPaciente(paciente.get());
             turnoARegistrar.setFecha(LocalDate.parse(turnoRequestDto.getFecha()));
+            turnoARegistrar.setHora(LocalTime.parse(turnoRequestDto.getHora()));
             turnoGuardado = turnoRepository.save(turnoARegistrar);
 
             turnoADevolver = mapToResponseDto(turnoGuardado);
@@ -100,6 +102,7 @@ public class TurnoService implements ITurnoService {
             turnoAModificar.setOdontologo(odontologo.get());
             turnoAModificar.setPaciente(paciente.get());
             turnoAModificar.setFecha(LocalDate.parse(turnoRequestDto.getFecha()));
+            turnoAModificar.setHora(LocalTime.parse(turnoRequestDto.getHora()));
             turnoRepository.save(turnoAModificar);
         }
         logger.info("Turno actualizado");
