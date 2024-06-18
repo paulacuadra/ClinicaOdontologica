@@ -7,11 +7,14 @@ import dh.backend.clinicamvc.Dto.response.PacienteResponseDto;
 import dh.backend.clinicamvc.Dto.response.TurnoResponseDto;
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.entity.Paciente;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
 import dh.backend.clinicamvc.service.impl.PacienteService;
 import dh.backend.clinicamvc.service.impl.TurnoService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -43,6 +46,7 @@ public class TurnoServiceTest {
     private OdontologoResponseDto odontologo;
     private TurnoRequestDto turno;
 
+    
 
     @BeforeEach
     public void setUp() {
@@ -74,10 +78,23 @@ public class TurnoServiceTest {
     @Test
     public void testCrearTurno() throws Exception {
         turnoService.registrar(turno);
-
         List<TurnoResponseDto> buscarTurno = turnoService.buscarTodos();
-
         assertFalse(buscarTurno.isEmpty());
+    }
+    @Test
+    @DisplayName("Testear busqueda turno por id")
+    public void testBuscarTurno() throws BadRequestException {
+        TurnoResponseDto crearTurno =  turnoService.registrar(turno);
+        Integer id = crearTurno.getId();
+        TurnoResponseDto turnoEncontrado = turnoService.buscarPorId(id);
+        assertEquals(id, turnoEncontrado.getId());
+    }
+
+    @Test
+    @DisplayName("Testear busqueda todos los turnos")
+    void testBusquedaTodos() {
+        List<TurnoResponseDto> turnos = turnoService.buscarTodos();
+        assertFalse(turnos.isEmpty());
     }
 }
 
