@@ -2,6 +2,7 @@ package dh.backend.clinicamvc.service;
 
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.exception.BadRequestException;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
 
 
@@ -43,7 +44,7 @@ public class OdontologoServiceTest {
     }
     @Test
     @DisplayName("Testear busqueda odontologo por id")
-    void testOdontologoPorId() throws BadRequestException{
+    void testOdontologoPorId() throws BadRequestException, ResourceNotFoundException {
 
         Odontologo odontologoGuardado = odontologoService.agregarOdontologo(odontologo);
         Integer id = odontologoGuardado.getId();

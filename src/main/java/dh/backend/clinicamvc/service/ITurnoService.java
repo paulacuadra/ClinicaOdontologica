@@ -12,7 +12,7 @@ import java.util.List;
 public interface ITurnoService {
     TurnoResponseDto registrar(TurnoRequestDto turnoRequestDto) throws BadRequestException;
 
-    TurnoResponseDto buscarPorId(Integer id);
+    TurnoResponseDto buscarPorId(Integer id) throws ResourceNotFoundException;
 
     List<TurnoResponseDto> buscarTodos();
     void actualizarTurno(Integer id, TurnoRequestDto turnoRequestDto);

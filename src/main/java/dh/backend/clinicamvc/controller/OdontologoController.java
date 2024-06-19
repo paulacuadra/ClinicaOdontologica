@@ -26,7 +26,7 @@ public class OdontologoController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Odontologo>  buscarOdontologoPorId(@PathVariable Integer id){
+    public ResponseEntity<Odontologo>  buscarOdontologoPorId(@PathVariable Integer id) throws ResourceNotFoundException{
         Optional<Odontologo> odontologo = odontologoService.buscarUnOdontologo(id);
         if(odontologo.isPresent()){
             Odontologo odontologoARetornar = odontologo.get();
@@ -37,7 +37,7 @@ public class OdontologoController {
     }
 
     @PutMapping
-    public ResponseEntity<String> modificarOdontologo(@RequestBody Odontologo odontologo){
+    public ResponseEntity<String> modificarOdontologo(@RequestBody Odontologo odontologo) throws ResourceNotFoundException{
         Optional<Odontologo> odontologoOptional = odontologoService.buscarUnOdontologo(odontologo.getId());
         if(odontologoOptional.isPresent()){
             odontologoService.modificarOdontologo(odontologo);

@@ -37,8 +37,12 @@ public class PacienteService implements IPacienteService {
         return new PacienteResponseDto(savedPaciente.getId(), savedPaciente.getNombre(), savedPaciente.getApellido(), savedPaciente.getDni());
     }
 
-    public Optional<Paciente> buscarPorId(Integer id){
-        return pacienteRepository.findById(id);
+    public Optional<Paciente> buscarPorId(Integer id) throws ResourceNotFoundException {
+        Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
+        if (pacienteOptional.isEmpty()) {
+            throw new ResourceNotFoundException("{\"message\": \"Paciente no encontrado\"}");
+        }
+        return pacienteOptional;
     }
 
     public List<Paciente> buscarTodos(){

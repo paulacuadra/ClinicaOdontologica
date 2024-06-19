@@ -36,7 +36,7 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> buscarPacientePorId(@PathVariable Integer id){
+    public ResponseEntity<Paciente> buscarPacientePorId(@PathVariable Integer id) throws ResourceNotFoundException{
         Optional<Paciente> paciente = pacienteService.buscarPorId(id);
         if(paciente.isPresent()){
             return ResponseEntity.ok(paciente.get());

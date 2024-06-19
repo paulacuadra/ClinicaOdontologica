@@ -11,7 +11,7 @@ public interface IPacienteService {
 
     Paciente registrarPaciente(Paciente paciente) throws BadRequestException;
 
-    Optional<Paciente> buscarPorId(Integer id);
+    Optional<Paciente> buscarPorId(Integer id) throws ResourceNotFoundException;
 
     List<Paciente> buscarTodos();
     void actualizarPaciente(Paciente paciente);

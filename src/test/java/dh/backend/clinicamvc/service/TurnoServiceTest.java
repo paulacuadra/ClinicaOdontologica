@@ -8,6 +8,7 @@ import dh.backend.clinicamvc.Dto.response.TurnoResponseDto;
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.entity.Paciente;
 import dh.backend.clinicamvc.exception.BadRequestException;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
 import dh.backend.clinicamvc.service.impl.PacienteService;
 import dh.backend.clinicamvc.service.impl.TurnoService;
@@ -88,7 +89,7 @@ public class TurnoServiceTest {
     }
     @Test
     @DisplayName("Testear busqueda turno por id")
-    public void testBuscarTurno() throws BadRequestException {
+    public void testBuscarTurno() throws BadRequestException, ResourceNotFoundException {
         TurnoResponseDto crearTurno =  turnoService.registrar(turno);
         Integer id = crearTurno.getId();
         TurnoResponseDto turnoEncontrado = turnoService.buscarPorId(id);

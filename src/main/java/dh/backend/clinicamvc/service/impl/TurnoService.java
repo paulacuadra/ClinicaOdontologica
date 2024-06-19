@@ -66,7 +66,7 @@ public class TurnoService implements ITurnoService {
     }
 
     @Override
-    public TurnoResponseDto buscarPorId(Integer id) {
+    public TurnoResponseDto buscarPorId(Integer id) throws ResourceNotFoundException{
         Optional<Turno> turnoOptional = turnoRepository.findById(id);
         if(turnoOptional.isPresent()){
             Turno turnoEncontrado = turnoOptional.get();
@@ -74,8 +74,9 @@ public class TurnoService implements ITurnoService {
             logger.info("Turno encontrado: "+ turnoADevolver);
             return turnoADevolver;
 
+        }else{
+            throw new ResourceNotFoundException("{\"message\": \"Turno no encontrado\"}");
         }
-        return null;
     }
 
     @Override

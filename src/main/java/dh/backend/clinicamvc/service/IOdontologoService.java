@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface IOdontologoService {
     Odontologo agregarOdontologo(Odontologo odontologo) throws BadRequestException;
 
-    Optional<Odontologo> buscarUnOdontologo(Integer id);
+    Optional<Odontologo> buscarUnOdontologo(Integer id) throws ResourceNotFoundException;
     List<Odontologo> buscarTodosOdontologos();
 
     void modificarOdontologo(Odontologo odontologo);

@@ -36,8 +36,12 @@ public class OdontologoService implements IOdontologoService {
         Odontologo savedOdontologo = odontologoRepository.save(odontologo);
         return new OdontologoResponseDto(savedOdontologo.getId(), savedOdontologo.getNombre(), savedOdontologo.getApellido(), savedOdontologo.getNroMatricula());
     }
-    public Optional<Odontologo> buscarUnOdontologo(Integer id){
-        return odontologoRepository.findById(id);
+    public Optional<Odontologo> buscarUnOdontologo(Integer id) throws ResourceNotFoundException{
+        Optional<Odontologo> odontologoOptional = odontologoRepository.findById(id);
+        if (odontologoOptional.isEmpty()) {
+            throw new ResourceNotFoundException("{\"message\": \"Paciente no encontrado\"}");
+        }
+        return odontologoOptional;
     }
     public List<Odontologo> buscarTodosOdontologos(){
         return odontologoRepository.findAll();
