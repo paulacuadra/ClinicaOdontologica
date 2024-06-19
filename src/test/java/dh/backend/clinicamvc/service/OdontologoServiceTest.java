@@ -1,6 +1,7 @@
 package dh.backend.clinicamvc.service;
 
 import dh.backend.clinicamvc.entity.Odontologo;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
 
 
@@ -34,7 +35,7 @@ public class OdontologoServiceTest {
 
     @Test
     @DisplayName("Testear que un odontologo fue guardado")
-    void testOdontologoGuardado(){
+    void testOdontologoGuardado()  throws BadRequestException {
         Odontologo odontologoDesdeLaBD = odontologoService.agregarOdontologo(odontologo);
         LOGGER.info("odontologo: "+ odontologo);
         assertNotNull(odontologoDesdeLaBD);
@@ -42,7 +43,7 @@ public class OdontologoServiceTest {
     }
     @Test
     @DisplayName("Testear busqueda odontologo por id")
-    void testOdontologoPorId(){
+    void testOdontologoPorId() throws BadRequestException{
 
         Odontologo odontologoGuardado = odontologoService.agregarOdontologo(odontologo);
         Integer id = odontologoGuardado.getId();

@@ -3,6 +3,7 @@ package dh.backend.clinicamvc.service.impl;
 import dh.backend.clinicamvc.Dto.response.PacienteResponseDto;
 import dh.backend.clinicamvc.entity.Paciente;
 import dh.backend.clinicamvc.exception.ResourceNotFoundException;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.repository.IPacienteRepository;
 import dh.backend.clinicamvc.service.IPacienteService;
 import org.slf4j.Logger;
@@ -22,12 +23,16 @@ public class PacienteService implements IPacienteService {
         this.pacienteRepository = pacienteRepository;
     }
 
-    public Paciente registrarPaciente(Paciente paciente){
-        logger.info("Paciente registrado: "+ paciente);
+    public Paciente registrarPaciente(Paciente paciente) throws BadRequestException{
+        if (paciente.getNombre() == null || paciente.getApellido() == null || paciente.getDni() == null) {
+            throw new BadRequestException("{\"message\": \"Faltan datos para registrar el paciente\"}");
+        }
+        logger.info("Paciente registrado: " + paciente);
         return pacienteRepository.save(paciente);
     }
     //registrar paciente dto
     public PacienteResponseDto registrar(Paciente paciente) {
+
         Paciente savedPaciente = pacienteRepository.save(paciente);
         return new PacienteResponseDto(savedPaciente.getId(), savedPaciente.getNombre(), savedPaciente.getApellido(), savedPaciente.getDni());
     }

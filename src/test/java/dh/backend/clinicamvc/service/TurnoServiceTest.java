@@ -46,10 +46,10 @@ public class TurnoServiceTest {
     private OdontologoResponseDto odontologo;
     private TurnoRequestDto turno;
 
-    
+
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(){
         // Registra un nuevo paciente
         Paciente nuevoPaciente = new Paciente();
         nuevoPaciente.setNombre("Roberto");
@@ -64,14 +64,19 @@ public class TurnoServiceTest {
         nuevoOdontologo.setNombre("Carlos");
         nuevoOdontologo.setApellido("Vazquez");
         nuevoOdontologo.setNroMatricula("12563");
-        odontologo = odontologoService.registrar(nuevoOdontologo); // Asegúrate de que este método retorna un OdontologoResponseDto
+        try {
+            odontologo = odontologoService.registrar(nuevoOdontologo); // Asegúrate de que este método retorna un OdontologoResponseDto
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
         // Crea el DTO del turno usando los IDs del paciente y odontólogo recién registrados
-        turno = new TurnoRequestDto();
-        turno.setFecha("2023-04-20"); // Asegúrate de que el formato de la fecha es correcto
-        turno.setPaciente_id(paciente.getId());
-        turno.setOdontologo_id(odontologo.getId());
+            turno = new TurnoRequestDto();
+            turno.setFecha("2023-04-20"); // Asegúrate de que el formato de la fecha es correcto
+            turno.setPaciente_id(paciente.getId());
+            turno.setOdontologo_id(odontologo.getId());
+
     }
 
 

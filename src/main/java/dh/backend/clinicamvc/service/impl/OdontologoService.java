@@ -3,6 +3,7 @@ package dh.backend.clinicamvc.service.impl;
 
 import dh.backend.clinicamvc.Dto.response.OdontologoResponseDto;
 import dh.backend.clinicamvc.entity.Odontologo;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.repository.IOdontologoRepository;
 import dh.backend.clinicamvc.service.IOdontologoService;
@@ -22,8 +23,11 @@ public class OdontologoService implements IOdontologoService {
         this.odontologoRepository = odontologoRepository;
     }
 
-    public Odontologo agregarOdontologo(Odontologo odontologo){
-        logger.info("Odontólogo guardado: "+ odontologo);
+    public Odontologo agregarOdontologo(Odontologo odontologo) throws BadRequestException {
+        if (odontologo.getNombre() == null || odontologo.getApellido() == null || odontologo.getNroMatricula() == null) {
+            throw new BadRequestException("{\"message\": \"Faltan datos para registrar el odontologo\"}");
+        }
+        logger.info("Odontologo registrado: " + odontologo);
         return odontologoRepository.save(odontologo);
     }
 

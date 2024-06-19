@@ -1,6 +1,7 @@
 package dh.backend.clinicamvc.controller;
 
 import dh.backend.clinicamvc.entity.Paciente;
+import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.IPacienteService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Paciente>  registrarPaciente(@RequestBody Paciente paciente){
+    public ResponseEntity<Paciente>  registrarPaciente(@RequestBody Paciente paciente) throws BadRequestException {
         Paciente pacienteARetornar = pacienteService.registrarPaciente(paciente);
         if(pacienteARetornar==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
