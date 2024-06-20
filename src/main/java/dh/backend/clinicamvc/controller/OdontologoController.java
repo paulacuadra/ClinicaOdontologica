@@ -49,8 +49,12 @@ public class OdontologoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarOdontologo(@PathVariable Integer id) throws ResourceNotFoundException {
-        odontologoService.eliminarOdontologo(id);
-        return ResponseEntity.ok("{\"message\": \"odontologo eliminado\"}");
+        try {
+            odontologoService.eliminarOdontologo(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 
     @GetMapping

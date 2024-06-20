@@ -2,6 +2,7 @@ package dh.backend.clinicamvc.controller;
 
 import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.entity.Paciente;
+import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.IOdontologoService;
 import dh.backend.clinicamvc.service.IPacienteService;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class VistaController {
     }
 
     @GetMapping("/buscarPaciente")
-    public String buscarPacientePorId(Model model, @RequestParam Integer id){
+    public String buscarPacientePorId(Model model, @RequestParam Integer id) throws ResourceNotFoundException {
         Optional<Paciente> pacienteOptional = pacienteService.buscarPorId(id);
         Paciente paciente = pacienteOptional.get();
         model.addAttribute("especialidad", "Paciente");
@@ -34,7 +35,7 @@ public class VistaController {
     }
 
     @GetMapping("/buscarOdontologo")
-    public String buscarOdontologoPorId(Model model, @RequestParam Integer id){
+    public String buscarOdontologoPorId(Model model, @RequestParam Integer id)throws ResourceNotFoundException{
         Optional<Odontologo> odontologoOptional = odontologoService.buscarUnOdontologo(id);
         Odontologo odontologo = odontologoOptional.get();
         model.addAttribute("especialidad", "odontologo");

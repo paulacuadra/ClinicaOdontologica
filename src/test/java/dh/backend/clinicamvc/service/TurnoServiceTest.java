@@ -13,9 +13,12 @@ import dh.backend.clinicamvc.service.impl.OdontologoService;
 import dh.backend.clinicamvc.service.impl.PacienteService;
 import dh.backend.clinicamvc.service.impl.TurnoService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -46,11 +49,11 @@ public class TurnoServiceTest {
     private PacienteResponseDto paciente;
     private OdontologoResponseDto odontologo;
     private TurnoRequestDto turno;
-
+    private static Logger logger = LoggerFactory.getLogger(OdontologoService.class);
 
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws BadRequestException{
         // Registra un nuevo paciente
         Paciente nuevoPaciente = new Paciente();
         nuevoPaciente.setNombre("Roberto");
@@ -74,7 +77,8 @@ public class TurnoServiceTest {
 
         // Crea el DTO del turno usando los IDs del paciente y odontólogo recién registrados
             turno = new TurnoRequestDto();
-            turno.setFecha("2023-04-20"); // Asegúrate de que el formato de la fecha es correcto
+            turno.setFecha("2023-04-20");
+            turno.setHora("10:30");// Asegúrate de que el formato de la fecha es correcto
             turno.setPaciente_id(paciente.getId());
             turno.setOdontologo_id(odontologo.getId());
 
@@ -100,6 +104,8 @@ public class TurnoServiceTest {
     @DisplayName("Testear busqueda todos los turnos")
     void testBusquedaTodos() {
         List<TurnoResponseDto> turnos = turnoService.buscarTodos();
+
+        logger.info("lista "+turnos.size());
         assertFalse(turnos.isEmpty());
     }
 }

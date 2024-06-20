@@ -6,6 +6,8 @@ import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.repository.IPacienteRepository;
 import dh.backend.clinicamvc.service.IPacienteService;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
