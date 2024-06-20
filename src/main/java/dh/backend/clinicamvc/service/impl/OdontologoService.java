@@ -41,6 +41,7 @@ public class OdontologoService implements IOdontologoService {
         if (odontologoOptional.isEmpty()) {
             throw new ResourceNotFoundException("{\"message\": \"Paciente no encontrado\"}");
         }
+        logger.info("Odontologo encontrado: " + odontologoOptional);
         return odontologoOptional;
     }
     public List<Odontologo> buscarTodosOdontologos(){
@@ -56,7 +57,7 @@ public class OdontologoService implements IOdontologoService {
     public void eliminarOdontologo(Integer id) throws ResourceNotFoundException {
         Optional<Odontologo> odontologoOptional = buscarUnOdontologo(id);
         if(odontologoOptional.isPresent()){
-            logger.info("Odontólogo guardado: "+ odontologoOptional);
+            logger.info("Odontólogo eliminado: "+ odontologoOptional);
             odontologoRepository.deleteById(id);}
         else {throw new ResourceNotFoundException("{\"message\": \"odontologo no encontrado\"}");}
     }

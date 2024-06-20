@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService {
-    private static Logger logger = LoggerFactory.getLogger(OdontologoService.class);
+    private static Logger logger = LoggerFactory.getLogger(PacienteService.class);
 
     private IPacienteRepository pacienteRepository;
 
@@ -34,7 +34,6 @@ public class PacienteService implements IPacienteService {
     }
     //registrar paciente dto
     public PacienteResponseDto registrar(Paciente paciente) {
-
         Paciente savedPaciente = pacienteRepository.save(paciente);
         return new PacienteResponseDto(savedPaciente.getId(), savedPaciente.getNombre(), savedPaciente.getApellido(), savedPaciente.getDni());
     }
@@ -44,6 +43,7 @@ public class PacienteService implements IPacienteService {
         if (pacienteOptional.isEmpty()) {
             throw new ResourceNotFoundException("{\"message\": \"Paciente no encontrado\"}");
         }
+        logger.info("Paciente encontrado: " + pacienteOptional);
         return pacienteOptional;
     }
 
@@ -61,7 +61,7 @@ public class PacienteService implements IPacienteService {
         Optional<Paciente> pacienteOptional = buscarPorId(id);
         if(pacienteOptional.isPresent()) {
             pacienteRepository.deleteById(id);
-            logger.info("Paciente registrado: " + pacienteOptional);
+            logger.info("Paciente eliminado: " + pacienteOptional);
         }
         else {
             throw new ResourceNotFoundException("{\"message\": \"paciente no encontrado\"}");

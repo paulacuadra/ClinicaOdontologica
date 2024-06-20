@@ -49,7 +49,7 @@ public class TurnoServiceTest {
     private PacienteResponseDto paciente;
     private OdontologoResponseDto odontologo;
     private TurnoRequestDto turno;
-    private static Logger logger = LoggerFactory.getLogger(OdontologoService.class);
+    private static Logger logger = LoggerFactory.getLogger(TurnoServiceTest.class);
 
 
     @BeforeEach
