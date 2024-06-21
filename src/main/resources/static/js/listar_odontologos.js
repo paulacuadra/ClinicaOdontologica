@@ -79,7 +79,7 @@ function deleteOdontologo(id) {
   })
     .then(response => {
       if (response.ok) {
-        console.log(`Odontólogo con ID ${id} eliminado.`, formData);
+        console.log(`Odontólogo con ID ${id} eliminado.`);
         fetchOdontologos(); // Actualizar la tabla después de eliminar
       } else {
         console.error(`Error al eliminar el odontólogo con ID ${id}`);

@@ -4,6 +4,8 @@ import dh.backend.clinicamvc.entity.Odontologo;
 import dh.backend.clinicamvc.exception.BadRequestException;
 import dh.backend.clinicamvc.exception.ResourceNotFoundException;
 import dh.backend.clinicamvc.service.impl.OdontologoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.util.Optional;
 @RequestMapping("/odontologo")
 public class OdontologoController {
     private OdontologoService odontologoService;
+    private static Logger logger = LoggerFactory.getLogger(OdontologoController.class);
+
 
     public OdontologoController(OdontologoService odontologoService) {
         this.odontologoService = odontologoService;
@@ -29,6 +33,8 @@ public class OdontologoController {
     public ResponseEntity<Odontologo>  buscarOdontologoPorId(@PathVariable Integer id) throws ResourceNotFoundException{
         Optional<Odontologo> odontologo = odontologoService.buscarUnOdontologo(id);
         if(odontologo.isPresent()){
+            logger.info("Odontologo encontrado: " + odontologo);
+
             Odontologo odontologoARetornar = odontologo.get();
             return ResponseEntity.ok(odontologoARetornar);
         }
@@ -51,6 +57,7 @@ public class OdontologoController {
     public ResponseEntity<String> eliminarOdontologo(@PathVariable Integer id) throws ResourceNotFoundException {
         try {
             odontologoService.eliminarOdontologo(id);
+            logger.info("Odontologo eliminado");
             return ResponseEntity.noContent().build(); // 204 No Content
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build(); // 404 Not Found
