@@ -11,7 +11,6 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Table(name ="turnos")
 public class Turno {
